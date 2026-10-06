@@ -1,4 +1,4 @@
-# IrrigaSmart
+# AquaTech
 
 Sistema de irrigação inteligente desenvolvido com ESP32, sensores, backend, banco de dados PostgreSQL e dashboard.
 
