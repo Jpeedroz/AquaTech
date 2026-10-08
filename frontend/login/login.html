@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Login — AquaSmart</title>
+  <link rel="stylesheet" href="../shared/css/global.css">
+  <link rel="stylesheet" href="login.css">
+</head>
+<body class="fundo-auth">
+  <main class="login-card">
+    <!-- Painel esquerdo: logo, frase e colinas -->
+    <section class="login-lado">
+      <img class="login-logo" src="../assets/logos/logo-claro.png" alt="AquaSmart">
+      <p class="login-frase">Monitore a umidade do solo, automatize a irrigação e acompanhe o consumo de água da sua propriedade em um único sistema.</p>
+      <img class="login-colinas" src="../assets/images/colinas.png" alt="">
+    </section>
+    <!-- Painel direito: formulário -->
+    <section class="login-form">
+      <h1>Faça seu login</h1>
+      <p class="sub">Acesse o monitoramento da sua propriedade</p>
+      <form id="formLogin" novalidate>
+        <label class="campo">E-mail
+          <span class="entrada"><span id="icMail"></span><input type="email" id="email" placeholder="seuemail@exemplo.com" autocomplete="username"></span>
+        </label>
+        <label class="campo">Senha
+          <span class="entrada"><span id="icLock"></span><input type="password" id="senha" placeholder="••••••••••" autocomplete="current-password"></span>
+        </label>
+        <a href="#" id="linkEsqueci" class="esqueci">Esqueci minha senha</a>
+        <p class="erro-texto" id="erro"></p>
+        <button type="submit" class="btn btn-azul btn-largo">Entrar</button>
+      </form>
+      <div class="ou"><span>ou</span></div>
+      <p class="rodape-form">Não tem uma conta? <a href="../cadastro/cadastro.html"><strong>Cadastre-se</strong></a></p>
+    </section>
+  </main>
+  <script src="../shared/js/utils.js"></script>
+  <script src="../shared/js/session.js"></script>
+  <script src="../shared/js/mockData.js"></script>
+  <script src="../shared/js/api.js"></script>
+  <script src="login.js"></script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cadastro — AquaSmart</title>
+  <link rel="stylesheet" href="../shared/css/global.css">
+  <link rel="stylesheet" href="cadastro.css">
+</head>
+<body class="fundo-auth">
+  <main class="cad-card">
+    <div class="cad-miolo">
+      <h1>Crie sua conta</h1>
+      <p class="sub">Comece a monitorar sua propriedade com o AquaSmart.</p>
+      <!-- Indicador de etapas -->
+      <div class="etapas">
+        <span class="etapa ativa"><b>1</b> Dados do proprietário</span><i class="linha"></i>
+        <span class="etapa"><b>2</b> Dados da propriedade</span>
+      </div>
+      <form id="formCadastro" novalidate>
+        <label class="campo">Nome completo<input id="nome" placeholder="Ex: Adão Silva" autocomplete="name"></label>
+        <div class="par">
+          <label class="campo">E-mail<input type="email" id="email" placeholder="seuemail@exemplo.com" autocomplete="email"></label>
+          <label class="campo">Telefone<input id="telefone" placeholder="(88) 99999-9999" autocomplete="tel"></label>
+        </div>
+        <div class="par">
+          <label class="campo">Senha<input type="password" id="senha" placeholder="••••••••••" autocomplete="new-password"></label>
+          <label class="campo">Confirmar senha<input type="password" id="confirmar" placeholder="••••••••••" autocomplete="new-password"></label>
+        </div>
+        <p class="erro-texto" id="erro"></p>
+        <button type="submit" class="btn btn-azul btn-largo">Continuar</button>
+      </form>
+      <p class="rodape-form"><a href="../login/login.html"><strong>Já tenho uma conta</strong></a></p>
+    </div>
+  </main>
+  <script src="../shared/js/utils.js"></script>
+  <script src="../shared/js/session.js"></script>
+  <script src="../shared/js/mockData.js"></script>
+  <script src="../shared/js/api.js"></script>
+  <script src="cadastro.js"></script>
+</body>
+</html>

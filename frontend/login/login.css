@@ -1,0 +1,16 @@
+.login-card { display: flex; width: 900px; height: 500px; background: #f8fafc; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,.2); }
+.login-lado { position: relative; width: 50%; display: flex; flex-direction: column; align-items: center; padding: 56px 36px 0; border-right: 2px solid #1d7a4a; background: #f8fafc; }
+.login-logo { width: 150px; }
+.login-frase { margin-top: 20px; text-align: center; color: #1c6b3a; font: 600 13px/1.5 var(--fonte-titulo); max-width: 270px; }
+.login-colinas { position: absolute; left: 0; bottom: 0; width: 100%; }
+.login-form { width: 50%; padding: 38px 46px; display: flex; flex-direction: column; }
+.login-form h1 { font-size: 22px; font-weight: 600; }
+.login-form .sub { color: var(--cinza); font-size: 12px; margin: 4px 0 22px; }
+.login-form form { display: flex; flex-direction: column; gap: 14px; }
+.entrada { position: relative; display: block; font-weight: 400; }
+.entrada > span { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #8a96a8; display: flex; }
+.entrada input { width: 100%; padding-left: 40px; }
+.esqueci { align-self: flex-end; font-size: 11px; font-weight: 600; margin-top: -6px; }
+.ou { position: relative; text-align: center; margin: 22px 0 14px; border-top: 1px solid var(--borda); }
+.ou span { position: relative; top: -8px; background: #f8fafc; padding: 0 8px; font-size: 9px; color: var(--cinza); }
+.rodape-form { text-align: center; font-size: 12px; color: var(--cinza); }
