@@ -1,0 +1,82 @@
+/* global.css — estilos comuns a todas as telas do AquaSmart (desktop) */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap');
+
+:root {
+  --navy: #182065; --azul: #0b7bbd; --verde: #1c6b3a; --verde-claro: #9ad48f;
+  --laranja: #c4570c; --vermelho: #e0141e;
+  --texto: #14213d; --cinza: #6b7787; --borda: #e3e8ee; --fundo: #f4f7f9; --branco: #fff;
+  --fonte-titulo: 'Poppins', 'Segoe UI', sans-serif; --fonte: 'Inter', 'Segoe UI', Arial, sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--fonte); color: var(--texto); background: var(--fundo); font-size: 14px; }
+h1, h2, h3 { font-family: var(--fonte-titulo); }
+a { color: var(--azul); text-decoration: none; }
+.icone { flex-shrink: 0; }
+[hidden] { display: none !important; }
+
+/* ----- botões e campos ----- */
+.btn { border: 1px solid transparent; border-radius: 8px; padding: 11px 20px; font: 600 14px var(--fonte-titulo); cursor: pointer; }
+.btn-azul { background: var(--navy); color: #fff; }
+.btn-azul:hover { background: #10174d; }
+.btn-claro { background: #fff; color: var(--texto); border-color: var(--borda); }
+.btn-contorno { background: #fff; color: var(--azul); border-color: var(--azul); }
+.btn-pequeno { padding: 7px 14px; font-size: 12px; }
+.btn-largo { width: 100%; padding: 14px; }
+.campo { display: flex; flex-direction: column; gap: 6px; font-size: 12px; font-weight: 600; }
+.campo input, .campo select { border: 1px solid var(--borda); background: #f8fafc; border-radius: 8px; padding: 12px 14px; font: 13px var(--fonte); color: var(--texto); }
+.campo input:focus, .campo select:focus { outline: 2px solid #b9d9ee; border-color: var(--azul); }
+.erro-texto { color: var(--vermelho); font-size: 12px; min-height: 16px; }
+
+/* ----- fundo e cartão das telas de entrada (login / cadastro) ----- */
+.fundo-auth { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 30px;
+  background: linear-gradient(180deg, #11698a 0%, #2d8138 100%); }
+
+/* ----- layout das telas internas ----- */
+.app { display: flex; min-height: 100vh; }
+.sidebar { width: 220px; flex-shrink: 0; position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column;
+  background: linear-gradient(180deg, #136b87 0%, #2f8a3c 100%); color: #fff; padding: 12px 12px 16px; }
+.sidebar-logo { width: 150px; align-self: center; margin: 4px 0 20px; }
+.menu { display: flex; flex-direction: column; gap: 6px; }
+.menu-item { display: flex; align-items: center; gap: 12px; padding: 11px 14px; border-radius: 8px; color: #fff; font: 500 13px var(--fonte-titulo); }
+.menu-item:hover { background: rgba(255,255,255,.14); }
+.menu-item.ativo { background: var(--verde-claro); color: #14502a; font-weight: 600; }
+.sidebar-rodape { margin-top: auto; border-top: 1px solid rgba(255,255,255,.3); padding-top: 14px; display: flex; flex-direction: column; gap: 12px; }
+.usuario { display: flex; align-items: center; gap: 10px; }
+.usuario strong { display: block; font: 600 12px var(--fonte-titulo); }
+.usuario small { font-size: 10px; opacity: .85; }
+.avatar { width: 28px; height: 28px; border-radius: 50%; background: var(--verde-claro); color: #14502a; display: grid; place-items: center; font: 600 12px var(--fonte-titulo); }
+.btn-sair { display: flex; align-items: center; gap: 10px; background: none; border: 0; color: #fff; font: 500 13px var(--fonte-titulo); cursor: pointer; padding: 4px 2px; }
+
+.main { flex: 1; min-width: 0; }
+.topbar { background: linear-gradient(90deg, #8a4a1b 0%, #4a2a12 100%); color: #fff; padding: 22px 30px 18px; min-height: 76px; }
+.topbar h1 { font-size: 17px; font-weight: 600; }
+.topbar p { font-size: 12px; margin-top: 3px; opacity: .95; }
+.conteudo { padding: 22px 30px 40px; }
+
+/* ----- cartões, indicadores e textos auxiliares ----- */
+.card { background: var(--branco); border: 1px solid var(--borda); border-radius: 12px; box-shadow: 0 1px 3px rgba(20,33,61,.05); }
+.grade-kpi { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.kpi { padding: 16px 18px; }
+.kpi-rotulo { display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--cinza); font-weight: 500; }
+.kpi-rotulo .icone { color: var(--azul); }
+.kpi-valor { font: 700 22px var(--fonte-titulo); margin-top: 10px; }
+.kpi-valor small { font-size: 12px; font-weight: 600; }
+.vazio { text-align: center; color: var(--cinza); padding: 36px 10px; font-size: 13px; }
+
+/* ----- filtro de período ----- */
+.filtro { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+.filtro-select select { background: var(--navy); color: #fff; border: 3px solid var(--navy); border-radius: 8px; padding: 6px 14px; font: 600 11px var(--fonte-titulo); cursor: pointer; min-width: 100px; }
+.filtro-pills .filtro-opcoes { display: flex; gap: 8px; }
+.filtro-pills button { border: 0; background: #eef2f6; color: var(--cinza); border-radius: 999px; padding: 6px 14px; font: 500 11px var(--fonte-titulo); cursor: pointer; }
+.filtro-pills button.ativo { background: #0b3d66; color: #fff; font-weight: 600; }
+.filtro-custom { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: flex-end; font-size: 11px; color: var(--cinza); }
+.filtro-custom input { border: 1px solid var(--borda); border-radius: 6px; padding: 5px 8px; font: 12px var(--fonte); margin-left: 4px; }
+
+/* ----- mensagens e janela modal ----- */
+.toast { position: fixed; right: 24px; bottom: 24px; z-index: 50; max-width: 360px; padding: 13px 18px; border-radius: 10px; color: #fff; font-size: 13px; box-shadow: 0 6px 20px rgba(0,0,0,.25); }
+.toast-sucesso { background: #1c6b3a; } .toast-erro { background: #b3261e; }
+.modal-fundo { position: fixed; inset: 0; background: rgba(10,20,40,.5); display: grid; place-items: center; z-index: 40; }
+.modal { background: #fff; border-radius: 14px; padding: 26px; width: 400px; display: flex; flex-direction: column; gap: 12px; }
+.modal-texto { font-size: 12px; color: var(--cinza); }
+.modal-campos { display: flex; flex-direction: column; gap: 12px; }
+.modal-botoes { display: flex; justify-content: flex-end; gap: 10px; }
