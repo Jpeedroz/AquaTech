@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard — AquaSmart</title>
+  <link rel="stylesheet" href="../shared/css/global.css">
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar" id="sidebar"></aside>
+    <main class="main">
+      <header class="topbar"><h1 id="tituloPagina"></h1><p id="subtituloPagina"></p></header>
+      <section class="conteudo">
+        <div class="grade-kpi">
+          <article class="card kpi kpi-solo" id="cardSolo">
+            <div class="kpi-rotulo">Umidade do solo atual</div>
+            <div class="kpi-valor" id="umidade">—</div>
+            <div class="kpi-status"><i class="ponto"></i><span id="soloStatus">—</span></div>
+          </article>
+          <article class="card kpi">
+            <div class="kpi-rotulo">Status da irrigação</div>
+            <div class="kpi-valor"><i class="ponto" id="pontoIrrig"></i><span id="irrigStatus">—</span></div>
+            <div class="kpi-nota" id="irrigNota"></div>
+          </article>
+          <article class="card kpi">
+            <div class="kpi-rotulo">Temperatura atual</div>
+            <div class="kpi-valor" id="temperatura">—</div>
+            <div class="kpi-nota">condição atual do ambiente</div>
+          </article>
+          <article class="card kpi">
+            <div class="kpi-rotulo">Consumo hoje</div>
+            <div class="kpi-valor azul" id="consumoHoje">—</div>
+            <div class="kpi-nota">Água utilizada na irrigação</div>
+          </article>
+        </div>
+        <article class="card grafico-card">
+          <h2>Umidade do solo hoje</h2>
+          <div class="legenda">
+            <span><i class="leg-ponto"></i>Umidade do solo</span>
+            <span><i class="leg-linha"></i>Limite de irrigação</span>
+            <span><i class="leg-faixa"></i>Irrigação ativa</span>
+          </div>
+          <div id="grafico"></div>
+        </article>
+      </section>
+    </main>
+  </div>
+  <script src="../shared/js/utils.js"></script>
+  <script src="../shared/js/session.js"></script>
+  <script src="../shared/js/mockData.js"></script>
+  <script src="../shared/js/api.js"></script>
+  <script src="dashboard.js"></script>
+</body>
+</html>

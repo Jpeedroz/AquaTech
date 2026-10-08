@@ -1,0 +1,18 @@
+.kpi-nota { font-size: 10px; color: var(--cinza); margin-top: 6px; }
+.kpi-valor.azul { color: var(--azul); }
+.ponto { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--vermelho); margin-right: 8px; vertical-align: middle; }
+.ponto.ligada { background: #1fa34a; }
+.kpi-solo { background: #536f50; border-color: #536f50; color: #fff; }
+.kpi-solo .kpi-rotulo { color: #e6efe4; }
+.kpi-status { display: flex; align-items: center; gap: 6px; font-size: 10px; margin-top: 8px; }
+.kpi-status .ponto { width: 6px; height: 6px; margin: 0; background: #9ad48f; }
+.kpi-solo.seco { background: #8a5a22; border-color: #8a5a22; }
+.kpi-solo.seco .kpi-status .ponto { background: #ffd08a; }
+.grafico-card { margin-top: 20px; padding: 20px 24px 14px; }
+.grafico-card h2 { font-size: 15px; font-weight: 600; }
+.legenda { display: flex; gap: 18px; font-size: 10px; color: var(--cinza); margin: 8px 0 6px; }
+.legenda span { display: flex; align-items: center; gap: 6px; }
+.leg-ponto { width: 8px; height: 8px; border-radius: 50%; background: var(--azul); }
+.leg-linha { width: 16px; border-top: 1.5px dashed #9aa5b3; }
+.leg-faixa { width: 14px; height: 10px; background: #c9f2c7; border: 1px solid #b4e5b1; }
+#grafico svg { width: 100%; height: auto; display: block; }
