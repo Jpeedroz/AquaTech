@@ -1,6 +1,6 @@
-# Frontend - IrrigaSmart
+# Frontend - AquaSmart
 
-Interface web do sistema IrrigaSmart.
+Interface web do sistema AquaSmart.
 
 ## Funções
 
