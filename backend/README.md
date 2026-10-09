@@ -1,3 +1,3 @@
 # Backend
 
-Aqui ficará a API do IrrigaSmart e a comunicação com o banco de dados.
+Aqui ficará a API do AquaTech e a comunicação com o banco de dados.
