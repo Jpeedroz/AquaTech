@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Recuperar senha — AquaSmart</title>
+  <link rel="stylesheet" href="../shared/css/global.css">
+  <link rel="stylesheet" href="../cadastro/cadastro.css">
+  <link rel="stylesheet" href="recuperar.css">
+</head>
+<body class="fundo-auth">
+  <main class="cad-card rec-card">
+    <div class="cad-miolo rec-miolo">
+      <h1>Esqueceu sua senha?</h1>
+      <p class="sub">Informe o e-mail da sua conta e enviaremos um link para você criar uma nova senha.</p>
+      <form id="formRecuperar" novalidate>
+        <label class="campo">E-mail<input type="email" id="email" placeholder="Digite seu e-mail" autocomplete="email"></label>
+        <p class="erro-texto" id="erro"></p>
+        <button type="submit" class="btn btn-azul btn-largo">Enviar link</button>
+      </form>
+      <!-- Aparece depois do envio (mensagem sempre igual, exista o e-mail ou não) -->
+      <div class="rec-resposta" id="resposta" hidden>
+        <p id="textoResposta"></p>
+      </div>
+      <p class="rodape-form"><a href="../login/login.html"><strong>Voltar para o login</strong></a></p>
+    </div>
+  </main>
+  <script src="../shared/js/utils.js"></script>
+  <script src="../shared/js/session.js"></script>
+  <script src="../shared/js/mockData.js"></script>
+  <script src="../shared/js/api.js"></script>
+  <script src="recuperar.js"></script>
+</body>
+</html>

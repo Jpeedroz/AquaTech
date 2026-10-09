@@ -19,7 +19,7 @@ document.getElementById('formCadastro').addEventListener('submit', async (ev) =>
   try {
     // A senha vai SOMENTE para a API, que gera o hash. Não é guardada no navegador.
     const dados = await cadastrarUsuario({ name, email, telefone, senha });
-    salvarSessao(dados);
+    salvarCadastroPendente(dados);                               // ainda NÃO está logado
     window.location.href = '../propriedade/propriedade.html';   // etapa 2
   } catch (e) { erro.textContent = e.message; }
 });

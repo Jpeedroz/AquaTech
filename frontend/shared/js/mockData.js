@@ -154,7 +154,8 @@ function mockResumoDashboard(uid) {
 // A verificação real da senha (hash) será feita pelo Flask.
 function mockLogin(email, senha) {
   const u = mockEstado.usuarios.find(x => x.email.toLowerCase() === email.toLowerCase());
-  if (!u || !senha) throw new Error('E-mail ou senha inválidos.');
+  if (!u) throw new Error('Não encontramos uma conta com este e-mail. Clique em "Cadastre-se" para criar a sua.');
+  if (!senha) throw new Error('Informe sua senha.');
   const p = mockPropriedadeDoUsuario(u.id);
   return { usuario_id: u.id, propriedade_id: p ? p.id : null, nome: u.name, email: u.email, token: 'token-mock' };
 }

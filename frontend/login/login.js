@@ -2,23 +2,28 @@
 document.getElementById('icMail').innerHTML = icone('mail');
 document.getElementById('icLock').innerHTML = icone('lock');
 
-document.getElementById('linkEsqueci').addEventListener('click', (ev) => {
-  ev.preventDefault();
-  mostrarMensagem('A recuperação de senha será disponibilizada junto com o back-end.', 'erro');
-});
+const alerta = document.getElementById('alerta');
+function mostrarAlerta(texto, tipo) { alerta.textContent = texto; alerta.className = 'alerta alerta-' + tipo; alerta.hidden = false; }
+
+// Aviso deixado pela tela anterior (ex.: cadastro concluído)
+const aviso = lerAviso();
+if (aviso) mostrarAlerta(aviso, 'ok');
 
 document.getElementById('formLogin').addEventListener('submit', async (ev) => {
   ev.preventDefault();
-  const erro = document.getElementById('erro');
   const email = document.getElementById('email').value.trim();
   const senha = document.getElementById('senha').value;
-  erro.textContent = '';
-  if (!email || !senha) { erro.textContent = 'Informe e-mail e senha.'; return; }
-  if (!validarEmail(email)) { erro.textContent = 'Informe um e-mail válido.'; return; }
+  alerta.hidden = true;
+  if (!email || !senha) { mostrarAlerta('Informe e-mail e senha.', 'erro'); return; }
+  if (!validarEmail(email)) { mostrarAlerta('Informe um e-mail válido.', 'erro'); return; }
   try {
     const dados = await login(email, senha);          // futuramente: POST /api/login
+    if (!dados.propriedade_id) {                      // conta criada, mas cadastro da propriedade não concluído
+      salvarCadastroPendente(dados);
+      window.location.href = '../propriedade/propriedade.html';
+      return;
+    }
     salvarSessao(dados);                              // guarda usuario_id e propriedade_id (nunca a senha)
-    // sem propriedade cadastrada → continua o cadastro (etapa 2)
-    window.location.href = dados.propriedade_id ? '../dashboard/dashboard.html' : '../propriedade/propriedade.html';
-  } catch (e) { erro.textContent = e.message; }
+    window.location.href = '../dashboard/dashboard.html';
+  } catch (e) { mostrarAlerta(e.message, 'erro'); }  // ex.: conta não encontrada
 });

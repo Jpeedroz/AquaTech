@@ -40,8 +40,13 @@ async function login(email, senha) {
 async function cadastrarUsuario({ name, email, telefone, senha }) {
   return USAR_MOCK ? mockCadastrarUsuario({ name, email, telefone }) : post('/usuarios', { name, email, telefone, senha });
 }
+// Etapa 2 do cadastro: ainda não há login, então usa o usuário criado na etapa 1.
+// O Flask deve validar o token de cadastro devolvido pela etapa 1.
 async function cadastrarPropriedade(dados) {
-  return USAR_MOCK ? mockCadastrarPropriedade(idUsuario(), dados) : post('/propriedades', dados);
+  const pendente = getCadastroPendente();
+  if (!pendente) throw new Error('Sua sessão de cadastro expirou. Comece o cadastro novamente.');
+  return USAR_MOCK ? mockCadastrarPropriedade(pendente.usuario_id, dados)
+                   : post('/propriedades', { ...dados, usuario_id: pendente.usuario_id, token_cadastro: pendente.token });
 }
 // Sair: avisa a API (quando existir), limpa a sessão e volta ao login.
 // A proteção REAL das telas será feita no Flask; limpar a sessão aqui é só interface.
@@ -110,4 +115,24 @@ async function getConsumoResumo() {
   if (!USAR_MOCK) return requisicao('/consumo/resumo');
   const pid = idPropriedade();
   return pid ? mockResumoConsumo(pid) : { hoje: 0, ultimos_7_dias: 0, ultimos_30_dias: 0, total: 0 };
+}
+
+/* ---------- recuperação de senha ---------- */
+// POST /api/recuperar-senha { email } → o Flask envia o link por e-mail.
+// A resposta deve ser SEMPRE a mesma, exista o e-mail ou não (não revelar quem tem conta).
+async function solicitarRecuperacaoSenha(email) {
+  if (USAR_MOCK) return { mock: true, mensagem: 'Se o e-mail estiver cadastrado, você receberá um link para redefinir a senha.' };
+  return post('/recuperar-senha', { email });
+}
+// POST /api/redefinir-senha { token, nova_senha } → o Flask valida o token e grava o novo senha_hash.
+async function redefinirSenha(token, novaSenha) {
+  if (USAR_MOCK) return { mensagem: 'Senha alterada com sucesso.' };
+  return post('/redefinir-senha', { token, nova_senha: novaSenha });
+}
+// GET /api/redefinir-senha/verificar?token=XXXX → { valido: true|false }
+// O Flask confere se o token existe, não expirou e não foi usado. Roda ao abrir o link do e-mail.
+async function verificarTokenRecuperacao(token) {
+  if (USAR_MOCK) return { valido: token !== 'expirado' };    // mock: ?token=expirado simula link vencido
+  if (!token) return { valido: false };
+  return requisicao(`/redefinir-senha/verificar?token=${encodeURIComponent(token)}`);
 }

@@ -39,3 +39,16 @@ function exigirLogin() {
   if (!getSessao()) { window.location.replace('../login/login.html'); return false; }
   return true;
 }
+
+/* ---------- cadastro em andamento (usuário criado, propriedade ainda não) ---------- */
+// Entre a etapa 1 e a etapa 2 o usuário AINDA NÃO está logado: guardamos só o id (e o
+// token temporário de cadastro, se o Flask devolver um). Nunca senha.
+const CHAVE_CADASTRO = 'aquasmart_cadastro_pendente';
+function salvarCadastroPendente(d) { sessionStorage.setItem(CHAVE_CADASTRO, JSON.stringify({ usuario_id: d.usuario_id, token: d.token ?? null })); }
+function getCadastroPendente() { try { return JSON.parse(sessionStorage.getItem(CHAVE_CADASTRO)); } catch (e) { return null; } }
+function limparCadastroPendente() { sessionStorage.removeItem(CHAVE_CADASTRO); }
+
+/* ---------- aviso para a próxima tela (lido uma única vez) ---------- */
+const CHAVE_AVISO = 'aquasmart_aviso';
+function definirAviso(texto) { sessionStorage.setItem(CHAVE_AVISO, texto); }
+function lerAviso() { const t = sessionStorage.getItem(CHAVE_AVISO); sessionStorage.removeItem(CHAVE_AVISO); return t; }
