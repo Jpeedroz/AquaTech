@@ -1,4 +1,4 @@
-# Database - IrrigaSmart
+# Database - AquaTech
 
 Banco de dados responsável pelo armazenamento das informações do sistema.
 
