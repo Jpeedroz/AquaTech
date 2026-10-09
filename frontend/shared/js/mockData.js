@@ -17,15 +17,15 @@
    ============================================================ */
 
 /* ---------- 1) Dados editáveis (ficam salvos no navegador) ---------- */
-const MOCK_CHAVE = 'aquasmart_mock_v1';
+const MOCK_CHAVE = 'aquasmart_mock_v2';
 const MOCK_ESTADO_INICIAL = {
   usuarios: [
     // "telefone" NÃO existe na tabela usuarios (ver INCOMPATIBILIDADE nº 1)
-    { id: 1, name: 'João Pereira', email: 'joao@example.com', telefone: '(88) 99999-9999' }
+    { id: 1, nome: 'João Pereira', email: 'joao@example.com', telefone: '(88) 99999-9999' }
   ],
   propriedades: [
     // "limite_umidade_desliga" NÃO existe no banco (ver INCOMPATIBILIDADE nº 2)
-    { id: 1, usuario_id: 1, name: 'Sítio Boa Vista', localizacao: 'Juazeiro do Norte - CE',
+    { id: 1, usuario_id: 1, nome: 'Sítio Boa Vista', localizacao: 'Juazeiro do Norte - CE',
       area_hectares: 2.00, cultura: 'Cebola', metodo_irrigacao: "Bomba d'água",
       limite_umidade: 18.00, limite_umidade_desliga: 30.00 }
   ],
@@ -41,12 +41,12 @@ function mockSalvar() { localStorage.setItem(MOCK_CHAVE, JSON.stringify(mockEsta
 
 /* ---------- 2) Dados fixos do dispositivo e sensores ---------- */
 const MOCK_DISPOSITIVOS = [
-  { id: 1, propriedade_id: 1, codigo_dispositivo: 'ESP32-001', name: 'ESP32 AquaSmart', online: true, irrigacao_ligada: false }
+  { id: 1, propriedade_id: 1, codigo_dispositivo: 'ESP32-001', nome: 'ESP32 AquaSmart', online: true, irrigacao_ligada: false }
 ];
 const MOCK_SENSORES = [
-  { id: 1, dispositivo_id: 1, type: 'umidade_solo', name: 'Sensor de Umidade', unit: '%' },
-  { id: 2, dispositivo_id: 1, type: 'temperature', name: 'Sensor de Temperatura', unit: '°C' },
-  { id: 3, dispositivo_id: 1, type: 'vazao_agua', name: 'Sensor de Vazão', unit: 'L/min' }
+  { id: 1, dispositivo_id: 1, tipo: 'umidade_solo', nome: 'Sensor de Umidade', unidade: '%' },
+  { id: 2, dispositivo_id: 1, tipo: 'temperatura', nome: 'Sensor de Temperatura', unidade: '°C' },
+  { id: 3, dispositivo_id: 1, tipo: 'vazao_agua', nome: 'Sensor de Vazão', unidade: 'L/min' }
 ];
 
 /* ---------- 3) Série de leituras e eventos (60 dias até hoje) ---------- */
@@ -82,8 +82,8 @@ function gerarSerieMock() {
       const dU = i === 0 ? 0 : ((i * 3 + k) % 5) - 2;        // pequena variação nos dias passados
       const dT = i === 0 ? 0 : ((i + k) % 3) - 1;
       const hora = paraTimestamp(quando(dia, h));
-      leituras.push({ id: idLeitura++, sensor_id: 1, type: 'umidade_solo', value: Math.min(45, Math.max(10, UMID[k] + dU)), hora_leitura: hora });
-      leituras.push({ id: idLeitura++, sensor_id: 2, type: 'temperature', value: TEMP[k] + dT, hora_leitura: hora });
+      leituras.push({ id: idLeitura++, sensor_id: 1, tipo: 'umidade_solo', valor: Math.min(45, Math.max(10, UMID[k] + dU)), hora_leitura: hora });
+      leituras.push({ id: idLeitura++, sensor_id: 2, tipo: 'temperatura', valor: TEMP[k] + dT, hora_leitura: hora });
     });
   }
   return { eventos, leituras };
@@ -98,7 +98,7 @@ function mockLeiturasPeriodo(pid, ini, fim) {
   const dispIds = mockDispositivosDaPropriedade(pid).map(d => d.id);
   const sensIds = MOCK_SENSORES.filter(s => dispIds.includes(s.dispositivo_id)).map(s => s.id);
   return MOCK_SERIE.leituras.filter(l => sensIds.includes(l.sensor_id) && mockNoPeriodo(l.hora_leitura, ini, fim))
-    .map(l => ({ sensor_id: l.sensor_id, type: l.type, value: l.value, hora_leitura: l.hora_leitura }));
+    .map(l => ({ sensor_id: l.sensor_id, tipo: l.tipo, valor: l.valor, hora_leitura: l.hora_leitura }));
 }
 function mockEventosPeriodo(pid, ini, fim) {
   const dispIds = mockDispositivosDaPropriedade(pid).map(d => d.id);
@@ -129,22 +129,22 @@ function mockResumoDashboard(uid) {
   const d = p ? mockDispositivosDaPropriedade(p.id)[0] : null;
   const ultima = (tipo) => {
     if (!d) return null;
-    const s = MOCK_SENSORES.find(x => x.dispositivo_id === d.id && x.type === tipo);
+    const s = MOCK_SENSORES.find(x => x.dispositivo_id === d.id && x.tipo === tipo);
     const ls = MOCK_SERIE.leituras.filter(l => l.sensor_id === s.id);
     return ls[ls.length - 1];
   };
   const hoje = paraISO(new Date());
-  const um = ultima('umidade_solo'), te = ultima('temperature');
+  const um = ultima('umidade_solo'), te = ultima('temperatura');
   return {
-    usuario_id: u.id, user_name: u.name,
-    propriedade_id: p ? p.id : null, property_name: p ? p.name : null, localizacao: p ? p.localizacao : null,
+    usuario_id: u.id, nome_usuario: u.nome,
+    propriedade_id: p ? p.id : null, nome_propriedade: p ? p.nome : null, localizacao: p ? p.localizacao : null,
     area_hectares: p ? p.area_hectares : null, cultura: p ? p.cultura : null,
     metodo_irrigacao: p ? p.metodo_irrigacao : null, limite_umidade: p ? p.limite_umidade : null,
     limite_umidade_desliga: p ? p.limite_umidade_desliga : null,          // extra (fora do banco)
     dispositivo_id: d ? d.id : null, codigo_dispositivo: d ? d.codigo_dispositivo : null,
     online: d ? d.online : null, irrigacao_ligada: d ? d.irrigacao_ligada : null,
     ultimo_sinal: um ? um.hora_leitura : null,
-    umidade_atual: um ? um.value : null, temperatura_atual: te ? te.value : null,
+    umidade_atual: um ? um.valor : null, temperatura_atual: te ? te.valor : null,
     consumo_agua_hoje: p ? mockEventosPeriodo(p.id, hoje, hoje).reduce((t, e) => t + e.agua_utilizada_litros, 0) : 0
   };
 }
@@ -154,16 +154,16 @@ function mockResumoDashboard(uid) {
 // A verificação real da senha (hash) será feita pelo Flask.
 function mockLogin(email, senha) {
   const u = mockEstado.usuarios.find(x => x.email.toLowerCase() === email.toLowerCase());
-  if (!u) throw new Error('Não encontramos uma conta com este e-mail. Clique em "Cadastre-se" para criar a sua.');
-  if (!senha) throw new Error('Informe sua senha.');
+  if (!u) { const e = new Error('Não encontramos uma conta com este e-mail. Cadastre-se para criar a sua.'); e.campo = 'email'; throw e; }
+  if (!senha) { const e = new Error('Informe sua senha.'); e.campo = 'senha'; throw e; }
   const p = mockPropriedadeDoUsuario(u.id);
-  return { usuario_id: u.id, propriedade_id: p ? p.id : null, nome: u.name, email: u.email, token: 'token-mock' };
+  return { usuario_id: u.id, propriedade_id: p ? p.id : null, nome: u.nome, email: u.email, token: 'token-mock' };
 }
-function mockCadastrarUsuario({ name, email, telefone }) {      // a senha vai só para a API, nunca é guardada aqui
+function mockCadastrarUsuario({ nome, email, telefone }) {      // a senha vai só para a API, nunca é guardada aqui
   if (mockEstado.usuarios.some(x => x.email.toLowerCase() === email.toLowerCase())) throw new Error('Este e-mail já está cadastrado.');
-  const u = { id: mockEstado.proximoUsuarioId++, name, email, telefone };
+  const u = { id: mockEstado.proximoUsuarioId++, nome, email, telefone };
   mockEstado.usuarios.push(u); mockSalvar();
-  return { usuario_id: u.id, propriedade_id: null, nome: u.name, email: u.email, token: 'token-mock' };
+  return { usuario_id: u.id, propriedade_id: null, nome: u.nome, email: u.email, token: 'token-mock' };
 }
 function mockCadastrarPropriedade(uid, dados) {
   if (mockPropriedadeDoUsuario(uid)) throw new Error('Este usuário já possui uma propriedade cadastrada.');
@@ -171,9 +171,9 @@ function mockCadastrarPropriedade(uid, dados) {
   mockEstado.propriedades.push(p); mockSalvar();
   return p;
 }
-function mockAtualizarUsuario(uid, { name, telefone }) {
+function mockAtualizarUsuario(uid, { nome, telefone }) {
   const u = mockEstado.usuarios.find(x => x.id === uid);
-  u.name = name; u.telefone = telefone; mockSalvar();
+  u.nome = nome; u.telefone = telefone; mockSalvar();
   return u;
 }
 function mockAtualizarPropriedade(uid, dados) {

@@ -22,7 +22,9 @@ async function requisicao(caminho, opcoes = {}) {
   });
   if (!resposta.ok) {
     const erro = await resposta.json().catch(() => ({}));
-    throw new Error(erro.mensagem || 'Erro na comunicação com o servidor.');
+    const e = new Error(erro.mensagem || 'Erro na comunicação com o servidor.');
+    e.campo = erro.campo || null;               // 'email' ou 'senha' quando o Flask indicar o campo com problema
+    throw e;
   }
   return resposta.json();
 }
@@ -37,8 +39,8 @@ async function login(email, senha) {
   return USAR_MOCK ? mockLogin(email, senha) : post('/login', { email, senha });
 }
 // O HASH da senha é gerado pelo Back-end, nunca aqui.
-async function cadastrarUsuario({ name, email, telefone, senha }) {
-  return USAR_MOCK ? mockCadastrarUsuario({ name, email, telefone }) : post('/usuarios', { name, email, telefone, senha });
+async function cadastrarUsuario({ nome, email, telefone, senha }) {
+  return USAR_MOCK ? mockCadastrarUsuario({ nome, email, telefone }) : post('/usuarios', { nome, email, telefone, senha });
 }
 // Etapa 2 do cadastro: ainda não há login, então usa o usuário criado na etapa 1.
 // O Flask deve validar o token de cadastro devolvido pela etapa 1.
@@ -63,8 +65,8 @@ async function getUsuario() {
 async function getPropriedade() {
   return USAR_MOCK ? { ...mockPropriedadeDoUsuario(idUsuario()) } : requisicao('/propriedade');
 }
-async function atualizarUsuario({ name, telefone }) {                         // PUT /api/usuario
-  return USAR_MOCK ? mockAtualizarUsuario(idUsuario(), { name, telefone }) : put('/usuario', { name, telefone });
+async function atualizarUsuario({ nome, telefone }) {                         // PUT /api/usuario
+  return USAR_MOCK ? mockAtualizarUsuario(idUsuario(), { nome, telefone }) : put('/usuario', { nome, telefone });
 }
 async function atualizarPropriedade(dados) {                                  // PUT /api/propriedade
   return USAR_MOCK ? mockAtualizarPropriedade(idUsuario(), dados) : put('/propriedade', dados);
@@ -88,11 +90,11 @@ async function getDashboardData() {
   const hoje = paraISO(new Date()), pid = idPropriedade();
   return {
     resumo: mockResumoDashboard(idUsuario()),
-    leituras_umidade: pid ? mockLeiturasPeriodo(pid, hoje, hoje).filter(l => l.type === 'umidade_solo') : [],
+    leituras_umidade: pid ? mockLeiturasPeriodo(pid, hoje, hoje).filter(l => l.tipo === 'umidade_solo') : [],
     eventos: pid ? mockEventosPeriodo(pid, hoje, hoje) : []
   };
 }
-// GET /api/historico?inicio=&fim= → { leituras: [{sensor_id,type,value,hora_leitura}], eventos: [...] }
+// GET /api/historico?inicio=&fim= → { leituras: [{sensor_id,tipo,valor,hora_leitura}], eventos: [...] }
 async function getHistoricoData(inicio, fim) {
   if (!USAR_MOCK) return requisicao(`/historico?inicio=${inicio}&fim=${fim}`);
   const pid = idPropriedade();

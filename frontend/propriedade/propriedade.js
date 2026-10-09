@@ -27,15 +27,15 @@ function iniciar() {
   document.getElementById('formPropriedade').addEventListener('submit', async (ev) => {
     ev.preventDefault();
     const erro = document.getElementById('erro');
-    const name = document.getElementById('nome').value.trim();
+    const nome = document.getElementById('nome').value.trim();
     const localizacao = document.getElementById('localizacao').value.trim();
     const area = parseFloat(document.getElementById('area').value);
-    if (!name || !localizacao || isNaN(area)) { erro.textContent = 'Preencha nome, localização e área cultivada.'; return; }
+    if (!nome || !localizacao || isNaN(area)) { erro.textContent = 'Preencha nome, localização e área cultivada.'; return; }
     if (area <= 0) { erro.textContent = 'A área cultivada deve ser maior que zero.'; return; }
     erro.textContent = '';
     try {
       await cadastrarPropriedade({            // futuramente: POST /api/propriedades
-        name, localizacao, area_hectares: area,
+        nome, localizacao, area_hectares: area,
         cultura: selCultura.value,
         metodo_irrigacao: document.querySelector('input[name=metodo]:checked').value
       });

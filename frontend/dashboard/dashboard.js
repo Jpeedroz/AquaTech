@@ -12,8 +12,8 @@ function renderizar({ resumo, leituras_umidade, eventos }) {
   // usuário logado sem propriedade → termina o cadastro (etapa 2)
   if (resumo.propriedade_id == null) { window.location.replace('../propriedade/propriedade.html'); return; }
   // Topo: nome do usuário e dados da propriedade vêm do cadastro (nada fixo no HTML)
-  definirTopo(`${saudacao()}, ${primeiroNome(resumo.user_name)}!`,
-              `Propriedade: ${resumo.property_name} - Cultura: ${resumo.cultura || 'não informada'}`);
+  definirTopo(`${saudacao()}, ${primeiroNome(resumo.nome_usuario)}!`,
+              `Propriedade: ${resumo.nome_propriedade} - Cultura: ${resumo.cultura || 'não informada'}`);
 
   const semLeitura = resumo.umidade_atual == null;
   // 1) umidade do solo
@@ -40,7 +40,7 @@ function desenharGraficoUmidade(el, leituras, eventos, liga, desliga) {
   if (!leituras.length) { el.innerHTML = '<p class="vazio">Não há leituras de umidade registradas hoje.</p>'; return; }
   const L = 900, A = 300, m = { e: 50, d: 16, t: 14, b: 32 };
   const w = L - m.e - m.d, h = A - m.t - m.b;
-  const pts = leituras.map(l => ({ hora: new Date(l.hora_leitura), v: Number(l.value) }));
+  const pts = leituras.map(l => ({ hora: new Date(l.hora_leitura), v: Number(l.valor) }));
   const t0 = pts[0].hora.getTime(), t1 = pts[pts.length - 1].hora.getTime(), span = Math.max(t1 - t0, 1);
   const vmax = Math.max(40, Math.ceil(Math.max(...pts.map(p => p.v), desliga || 0) / 10) * 10);
   const X = t => m.e + ((t - t0) / span) * w;
