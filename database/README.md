@@ -16,4 +16,4 @@ PostgreSQL
 - Histórico das irrigações;
 - Consumo de água.
 
-O arquivo `irrigasmart_database.sql` contém a estrutura do banco e os dados utilizados para testes.
+O arquivo `aquatech_database.sql` contém a estrutura do banco e os dados utilizados para testes.
