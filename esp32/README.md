@@ -1,4 +1,4 @@
-# ESP32 - IrrigaSmart
+# ESP32 - AquaTech
 
 Código responsável pelo funcionamento do ESP32 no sistema IrrigaSmart.
 
