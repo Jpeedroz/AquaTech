@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Histórico — AquaSmart</title>
+  <link rel="stylesheet" href="../shared/css/global.css">
+  <link rel="stylesheet" href="historico.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar" id="sidebar"></aside>
+    <main class="main">
+      <header class="topbar"><h1 id="tituloPagina"></h1><p id="subtituloPagina"></p></header>
+      <section class="conteudo">
+        <div class="grade-kpi">
+          <article class="card kpi"><div class="kpi-rotulo" id="r1"></div><div class="kpi-valor" id="kUmidMedia">—</div></article>
+          <article class="card kpi"><div class="kpi-rotulo" id="r2"></div><div class="kpi-valor" id="kTempMedia">—</div></article>
+          <article class="card kpi"><div class="kpi-rotulo" id="r3"></div><div class="kpi-valor" id="kUmidMin">—</div></article>
+          <article class="card kpi"><div class="kpi-rotulo" id="r4"></div><div class="kpi-valor" id="kTempMax">—</div></article>
+        </div>
+        <article class="card medicoes">
+          <div class="medicoes-topo">
+            <div><h2>Medições</h2><p class="contagem" id="contagem"></p></div>
+            <div id="filtro"></div>
+          </div>
+          <div class="tabela-card">
+            <div class="tabela-titulo"><h3>Registros recentes</h3><span id="rotuloPeriodo"></span></div>
+            <div class="tabela-rolagem" id="tabela"></div>
+          </div>
+        </article>
+      </section>
+    </main>
+  </div>
+  <script src="../shared/js/utils.js"></script>
+  <script src="../shared/js/session.js"></script>
+  <script src="../shared/js/mockData.js"></script>
+  <script src="../shared/js/api.js"></script>
+  <script src="historico.js"></script>
+</body>
+</html>
